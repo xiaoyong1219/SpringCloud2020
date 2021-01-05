@@ -20,7 +20,12 @@ import javax.annotation.Resource;
 @Slf4j
 @Api(tags = "订单模块")
 public class OrderController {
-    private static final String PAYMENT_URL = "http://localhost:8001";
+
+    //单机版，直接请求服务
+    //private static final String PAYMENT_URL = "http://localhost:8001";
+
+    //eureka注册服务版，这里指定的是payment服务在eureka服务中暴露的服务名，
+    private static final String PAYMENT_URL = "http://CLOUD-PAYMENT-SERVICE";
     @Resource
     private RestTemplate restTemplate;
 
