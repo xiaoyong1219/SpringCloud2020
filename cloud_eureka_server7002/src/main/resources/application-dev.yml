@@ -10,5 +10,17 @@ eureka:
     #false表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务
     fetch-registry: false
     service-url:
-      #设置与Eureka Server交互的地址，查询服务和注册服务都需要依赖这个地址
+      #设置与Eureka Server交互的地址，查询服务和注册服务都需要依赖这个地址（集群的话指向其他eureka，单机就指向自己）
       defaultZone: http://eurekaserver7001.com:7001/eureka/,http://eurekaserver7003.com:7003/eureka/
+  server:
+      # 保护模式主要是客户端和Eureka Server之间一种用于应对网络异常的安全保护措施，可以使得Eureka集群更加的健壮、稳定
+      # 当Eureka Server节点在短时间内丢失过多客户端时（可能发生了网络分区故障），就会自动进入自我保护模式，
+      # 界面提示：EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY'RE NOT. RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED JUST TO BE SAFE.
+      # 宁可同时保留所有微服务（健康的和不健康的微服务都会保留），
+      # 也不盲目注销任何健康的微服务，当网络故障恢复后（客户端再次主动上报心跳），Eureka Server会自动退出自我保护模式
+      # 关闭eureka的自我保护模式（默认是true）
+      # 关闭后，界面提示：
+      # THE SELF PRESERVATION MODE IS TURNED OFF. THIS MAY NOT PROTECT INSTANCE EXPIRY IN CASE OF NETWORK/OTHER PROBLEMS.
+      enable-self-preservation: false
+      # eureka server清理无效节点的时间间隔，默认60000毫秒，即60秒
+      eviction-interval-timer-in-ms: 2000
