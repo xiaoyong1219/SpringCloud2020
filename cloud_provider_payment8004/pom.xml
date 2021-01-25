@@ -9,20 +9,34 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cloud_eureka_server7001</artifactId>
-
-    <!-- dependency 如果没写版本标签 version,则从父工程 dependencyManagement 里面找,找到了就直接用,全局统一，若子模块指定了版本则用子模块的-->
+    <artifactId>cloud_provider_payment8004</artifactId>
     <dependencies>
-        <!-- eureka-server -->
+        <!-- dependency 如果没写版本标签 version,则从父工程 dependencyManagement 里面找,找到了就直接用,全局统一，若子模块指定了版本则用子模块的-->
+        <!-- SpringBoot整合zookeeper客户端 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+            <artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>
+            <!-- 当zookeeper依赖和服务端zookeeper版本存在冲突时候，可先排除自带的zookeeper3.5.3，然后另外引入指定的适配版本3.4.9 -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.zookeeper</groupId>
+                    <artifactId>zookeeper</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-        <!-- 引用自己定义的api通用包，可以使用Payment支付Entity -->
+        <!-- 添加zookeeper3.4.9版本-->
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.4.9</version>
+        </dependency>
+        <!--引入自己定义的api 通用包，可以使用Payment支付Entities -->
         <dependency>
             <groupId>com.xiaoyong.springcloud</groupId>
             <artifactId>cloud_api_commons</artifactId>
+            <version>${cloud_api_commons.version}</version>
         </dependency>
+        <!-- SpringBoot 整合Web组件 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -32,7 +46,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        <!-- 一般通用配置 -->
+        <!--热部署-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -50,5 +64,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
 </project>

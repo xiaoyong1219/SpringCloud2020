@@ -10,14 +10,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>cloud_consumer_order80</artifactId>
-
+    <!-- dependency 如果没写版本标签 version,则从父工程 dependencyManagement 里面找,找到了就直接用,全局统一，若子模块指定了版本则用子模块的-->
     <dependencies>
         <!-- eureka-client -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
-        <!--如果没写版本标签 version,则从父工程 dependencyManagement 里面找,找到了就直接用,全局统一，若子模块指定了版本则用子模块的-->
         <dependency>
             <groupId>com.xiaoyong.springcloud</groupId>
             <artifactId>cloud_api_commons</artifactId>
