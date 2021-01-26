@@ -28,4 +28,10 @@ public class PaymentController {
     public String paymentZk() {
         return "SpringCloud with zookeeper: " + serverPort + "\t" + UUID.randomUUID().toString();
     }
+
+    @GetMapping(value = "/zkt")
+    public String paymentZkt() {
+        log.error("出错了");
+        return "SpringCloud with zookeeper: " + serverPort + "\t" + UUID.randomUUID().toString();
+    }
 }
