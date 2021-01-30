@@ -21,6 +21,6 @@ eureka:
     # 关闭eureka的自我保护模式（默认是true）
     # 关闭后，界面提示：
     # THE SELF PRESERVATION MODE IS TURNED OFF. THIS MAY NOT PROTECT INSTANCE EXPIRY IN CASE OF NETWORK/OTHER PROBLEMS.
-    enable-self-preservation: false
+    enable-self-preservation: true
     # eureka server清理无效节点的时间间隔，默认60000毫秒，即60秒
     eviction-interval-timer-in-ms: 2000

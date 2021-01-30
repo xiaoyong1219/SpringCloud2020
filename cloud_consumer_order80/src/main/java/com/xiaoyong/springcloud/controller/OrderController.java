@@ -4,6 +4,7 @@ import com.xiaoyong.springcloud.entities.CommonResult;
 import com.xiaoyong.springcloud.entities.Payment;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -30,13 +31,25 @@ public class OrderController {
     private RestTemplate restTemplate;
 
     @PostMapping(value = "/create")
-    public CommonResult<Payment> create(@RequestBody Payment payment){
-        return restTemplate.postForObject(PAYMENT_URL + "/payment/create",payment,CommonResult.class);
+    public CommonResult<Payment> create(@RequestBody Payment payment) {
+        return restTemplate.postForObject(PAYMENT_URL + "/payment/create", payment, CommonResult.class);
     }
 
-    @GetMapping(value = "/get/{id}")
-    public CommonResult<Payment> getPaymentById(@PathVariable("id") Long id){
-        return restTemplate.getForObject(PAYMENT_URL + "/payment/get/"+id,CommonResult.class);
+    @GetMapping(value = "/getForObject/{id}")
+    public CommonResult<Payment> getPaymentById(@PathVariable("id") Long id) {
+        //getForObject 返回对象为响应体中数据转化成的对象，基本上可以理解成Json
+        return restTemplate.getForObject(PAYMENT_URL + "/payment/get/" + id, CommonResult.class);
+    }
+
+    @GetMapping(value = "/getForEntity/{id}")
+    public CommonResult<Payment> getPaymentById2(@PathVariable("id") Long id) {
+        //getForEntity 返回对象为ResponseEntity对象，包含了响应中的一些重要信息，比如响应头、响应状态码、响应体等
+        ResponseEntity<CommonResult> commonResultResponseEntity = restTemplate.getForEntity(PAYMENT_URL + "/payment/get/" + id, CommonResult.class);
+        if (commonResultResponseEntity.getStatusCode().is2xxSuccessful()) {
+            return commonResultResponseEntity.getBody();
+        }else{
+            return new CommonResult<Payment>(0,"服务异常");
+        }
     }
 
 }

@@ -6,17 +6,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * Create By dongxiaoyong on /2020/12/30
+ * Create By dongxiaoyong on /2021/1/30
  * description: 配置类
  *
  * @author dongxiaoyong
  */
 @Configuration
-public class ApplicationConextConfig {
+public class ApplicationContextConfig {
 
     @Bean
-    @LoadBalanced //使用@LoadBalanced注解赋予RestTemplate负载均衡的能力
-    public RestTemplate getRestTemplate(){
+    @LoadBalanced //若不加此注解，使用Ribbon做客户端负载均衡，服务提供者使用服务名，客户端报错， java.net.UnknownHostException
+    public RestTemplate getTemplate() {
         return new RestTemplate();
     }
 }
