@@ -68,8 +68,13 @@ public class PaymentController {
         Map<String, Object> map = new HashMap<>();
         List<String> services = discoveryClient.getServices();
         map.put("services", services);
-       List<ServiceInstance> serviceInstanceList = discoveryClient.getInstances(serviceId);
-       map.put("serviceInstanceList",serviceInstanceList);
-       return new CommonResult(200,"查询: "+ serviceId + " 服务信息成功",map);
+        List<ServiceInstance> serviceInstanceList = discoveryClient.getInstances(serviceId);
+        map.put("serviceInstanceList", serviceInstanceList);
+        return new CommonResult(200, "查询: " + serviceId + " 服务信息成功", map);
+    }
+
+    @GetMapping(value = "/lb")
+    public String getPaymentLB() {
+        return serverPort;
     }
 }
